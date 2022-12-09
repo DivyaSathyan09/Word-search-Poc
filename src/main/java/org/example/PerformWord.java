@@ -25,7 +25,6 @@ public class PerformWord implements Runnable {
         String inputDataFromFile;
         try {
             inputDataFromFile = new String(Files.readAllBytes(Paths.get(inputFilePath)));
-
             inputDataFromFile = inputDataFromFile.replaceAll("[^a-zA-Z0-9@-]", "  ");
             StringTokenizer st = new StringTokenizer(inputDataFromFile);
             while (st.hasMoreTokens()) {
