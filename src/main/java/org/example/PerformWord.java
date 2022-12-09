@@ -25,20 +25,22 @@ public class PerformWord implements Runnable {
         String inputDataFromFile;
         try {
             inputDataFromFile = new String(Files.readAllBytes(Paths.get(inputFilePath)));
+
+            inputDataFromFile = inputDataFromFile.replaceAll("[^a-zA-Z0-9@-]", "  ");
+            StringTokenizer st = new StringTokenizer(inputDataFromFile);
+            while (st.hasMoreTokens()) {
+                if (searchWord.equalsIgnoreCase(st.nextToken())) {
+                    matchingResultsCount++;
+                }
+            }
+            if (matchingResultsCount > 0) {
+                System.out.println("The Word : " + searchWord + " is Found! Count : " + matchingResultsCount);
+            } else {
+                System.out.println("The Word : " + searchWord + " is incorrect! Count : " + matchingResultsCount);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        inputDataFromFile = inputDataFromFile.replaceAll("[^a-zA-Z0-9@-]", "  ");
-        StringTokenizer st = new StringTokenizer(inputDataFromFile);
-        while (st.hasMoreTokens()) {
-            if (searchWord.equalsIgnoreCase(st.nextToken())) {
-                matchingResultsCount++;
-            }
-        }
-        if (matchingResultsCount > 0) {
-            System.out.println("The Word : " + searchWord + " is Found! Count : " + matchingResultsCount);
-        } else {
-            System.out.println("The Word : " + searchWord + " is incorrect! Count : " + matchingResultsCount);
-        }
     }
+
 }
