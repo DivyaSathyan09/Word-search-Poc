@@ -37,7 +37,6 @@ public class OccurrenceWordPoc {
      */
     public static void performRead() {
         StringBuilder fileContents = new StringBuilder();
-
         try {
             FileReader find = new FileReader(inputFilePath);//Creation of fileReader object
             BufferedReader bufferedReader = new BufferedReader(find);// Creation of BufferedReader object
