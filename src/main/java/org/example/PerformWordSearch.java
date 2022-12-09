@@ -10,11 +10,11 @@ In this performWord it is used to search the given word present in file
 count the number of ccurance of word and pass the information to main thread
 by using implements Runnable and overriding the run()
  */
-public class PerformWord implements Runnable {
+public class PerformWordSearch implements Runnable {
     private final String inputFilePath;
     private final String searchWord;
 
-    public PerformWord(String inputFilePath, String searchWord) {
+    public PerformWordSearch(String inputFilePath, String searchWord) {
         this.inputFilePath = inputFilePath;
         this.searchWord = searchWord;
     }

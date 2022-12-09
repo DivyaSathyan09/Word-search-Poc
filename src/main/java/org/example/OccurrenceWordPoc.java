@@ -6,27 +6,26 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class OccurrenceWordPoc {
-    static String inputFilePath;
-    static String searchWord;
-
     /*
     Entering the path
     once if the input is received it shows processing
     and executes if the file is present or not present
      */
     public static void main(String[] args) {
-        inputFilePath = args[0];
-        searchWord = args[1];
-        System.out.println(inputFilePath);
-        File inputFile = new File(inputFilePath);
-        System.out.println("Processing......");
-        if (inputFile.exists()) {
-            System.out.println("File already exists");
-        } else {
-            System.out.println("File dont exist");
-            return;
+        if (args.length == 2) {
+            String inputFilePath = args[0];
+            String searchWord = args[1];
+            System.out.println(inputFilePath);
+            File inputFile = new File(inputFilePath);
+            System.out.println("Processing......");
+            if (inputFile.exists()) {
+                System.out.println("File already exists");
+            } else {
+                System.out.println("File dont exist");
+                return;
+            }
+            performRead(inputFilePath, searchWord);
         }
-        performRead();
     }
 
     /*
@@ -35,7 +34,7 @@ public class OccurrenceWordPoc {
     then by using try and catch Exception, reading the content from the file
     calling performsearch()
      */
-    public static void performRead() {
+    public static void performRead(String inputFilePath, String searchWord) {
         StringBuilder fileContents = new StringBuilder();
         try {
             FileReader find = new FileReader(inputFilePath);//Creation of fileReader object
@@ -50,7 +49,7 @@ public class OccurrenceWordPoc {
             System.out.println(" Something went wrong!The file name is Incorrect,The file '" + inputFilePath + "' does not exist.");
         }
         // calling performSearch();
-        PerformWord performWord = new PerformWord(inputFilePath, searchWord);
+        PerformWordSearch performWord = new PerformWordSearch(inputFilePath, searchWord);
         performWord.run();
     }
 }
