@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 public class OccurrenceWordPoc {
     /*
@@ -16,15 +17,22 @@ public class OccurrenceWordPoc {
             String inputFilePath = args[0];
             String searchWord = args[1];
             System.out.println(inputFilePath);
-            File inputFile = new File(inputFilePath);
-            System.out.println("Processing......");
-            if (inputFile.exists()) {
-                System.out.println("File already exists");
+            if (inputFilePath.endsWith(".txt") || inputFilePath.endsWith(".json")) {
+                File inputFile = new File(inputFilePath);
+                System.out.println("Processing......");
+                if (inputFile.exists()) {
+                    System.out.println("File already exists");
+                } else {
+                    System.out.println("File dont exist");
+                    return;
+                }
+
+                performRead(inputFilePath, searchWord);
             } else {
-                System.out.println("File dont exist");
-                return;
+                System.out.println("File is not in Supported format");
             }
-            performRead(inputFilePath, searchWord);
+        } else {
+            System.out.println("Number of arguments are exceeded");
         }
     }
 
@@ -46,7 +54,7 @@ public class OccurrenceWordPoc {
             }
             bufferedReader.close();//Close the file
         } catch (IOException ex) {
-            System.out.println(" Something went wrong!The file name is Incorrect,The file '" + inputFilePath + "' does not exist.");
+            System.out.println("Something went wrong! The file name is Incorrect,the file '" + inputFilePath + "' does not exist.");
         }
         // calling performSearch();
         PerformWordSearch performWord = new PerformWordSearch(inputFilePath, searchWord);
