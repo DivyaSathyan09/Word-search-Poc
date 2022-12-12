@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f73f786-3ef6-4e0e-aa04-2101f9b763ec" name="Changes" comment="Added a check for length of the arguments and reformatting has been done">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+    <list default="true" id="6f73f786-3ef6-4e0e-aa04-2101f9b763ec" name="Changes" comment="Added as per requirement has txt or json file and reformatting had done">
+      <change afterPath="$PROJECT_DIR$/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/OccurrenceWordPoc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/OccurrenceWordPoc.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PerformWordSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PerformWordSearch.java" afterDir="false" />
@@ -22,6 +19,13 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -96,7 +100,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1670412272692</updated>
-      <workItem from="1670412274510" duration="28827000" />
+      <workItem from="1670412274510" duration="37714000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Initial Commit.&quot;">
       <created>1670412333969</created>
@@ -140,7 +144,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670573168330</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added as per requirement has txt or json file and reformatting had done">
+      <created>1670820743984</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1670820743984</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added as per requirement has txt or json file and reformatting had done">
+      <created>1670820894152</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1670820894152</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -164,6 +182,7 @@
     <MESSAGE value="Made changes in PerformWord class where all logics are done by using try and catch block" />
     <MESSAGE value="Code reformatting has been done." />
     <MESSAGE value="Added a check for length of the arguments and reformatting has been done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a check for length of the arguments and reformatting has been done" />
+    <MESSAGE value="Added as per requirement has txt or json file and reformatting had done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added as per requirement has txt or json file and reformatting had done" />
   </component>
 </project>

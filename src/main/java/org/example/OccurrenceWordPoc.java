@@ -1,10 +1,6 @@
 package org.example;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.SQLOutput;
 
 public class OccurrenceWordPoc {
     /*
@@ -26,7 +22,7 @@ public class OccurrenceWordPoc {
                     System.out.println("File dont exist");
                     return;
                 }
-                performRead(inputFilePath, searchWord);
+                performReadWordSearch(inputFilePath, searchWord);
             } else {
                 System.out.println("File is not in Supported format");
             }
@@ -36,26 +32,10 @@ public class OccurrenceWordPoc {
     }
 
     /*
-    In this performRead it is used to read the content present in the file
-    by creation of fileReader object and bufferReader object
-    then by using try and catch Exception, reading the content from the file
-    calling performsearch()
+    In this performRead it is used to call the other class by creating object
      */
-    public static void performRead(String inputFilePath, String searchWord) {
-        StringBuilder fileContents = new StringBuilder();
-        try {
-            FileReader find = new FileReader(inputFilePath);//Creation of fileReader object
-            BufferedReader bufferedReader = new BufferedReader(find);// Creation of BufferedReader object
-            //Reading content from the file
-            String lineText;
-            while ((lineText = bufferedReader.readLine()) != null) {
-                fileContents.append(lineText);
-            }
-            bufferedReader.close();//Close the file
-        } catch (IOException ex) {
-            System.out.println("Something went wrong! The file name is Incorrect,the file '" + inputFilePath + "' does not exist.");
-        }
-        // calling performSearch();
+    public static void performReadWordSearch(String inputFilePath, String searchWord) {
+        // calling performSearch()
         PerformWordSearch performWord = new PerformWordSearch(inputFilePath, searchWord);
         performWord.run();
     }
