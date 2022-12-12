@@ -26,7 +26,6 @@ public class OccurrenceWordPoc {
                     System.out.println("File dont exist");
                     return;
                 }
-
                 performRead(inputFilePath, searchWord);
             } else {
                 System.out.println("File is not in Supported format");
