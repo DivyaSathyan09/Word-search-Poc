@@ -1,13 +1,12 @@
 package org.example;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.StringTokenizer;
 
 /*
-In this performWord it is used to search the given word present in file
-count the number of ccurance of word and pass the information to main thread
+This method search the occurence of given word present in file
+count the number of occurance of word and pass the information to main thread
 by using implements Runnable and overriding the run()
  */
 public class PerformWordSearch implements Runnable {
@@ -32,13 +31,16 @@ public class PerformWordSearch implements Runnable {
                     matchingResultsCount++;
                 }
             }
+            DatabaseHelper dbHelper = new DatabaseHelper();
             if (matchingResultsCount > 0) {
+                dbHelper.storingDataToDataBase(inputFilePath, searchWord, "Success", matchingResultsCount, "");
                 System.out.println("The Word : " + searchWord + " is Found! Count : " + matchingResultsCount);
             } else {
+                dbHelper.storingDataToDataBase(inputFilePath, searchWord, "Error", matchingResultsCount, "Word not found");
                 System.out.println("The Word : " + searchWord + " is incorrect! Count : " + matchingResultsCount);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
