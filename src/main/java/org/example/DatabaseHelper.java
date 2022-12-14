@@ -11,7 +11,7 @@ The table contains following columns, path to the file, the word searched, the d
 with error and success messages
  */
 public class DatabaseHelper {
-    public static final String AUDIT = "audit";
+
     String driverClass = "com.mysql.cj.jdbc.Driver";
     String mySqlUrl = "jdbc:mysql://localhost:3306/Poc1";
     String userName = "root";
@@ -24,17 +24,17 @@ public class DatabaseHelper {
      */
     public void storingDataToDataBase(String filepath, String WordSearch, String finalResult, int totalNumberOfWords, String errorMessage) throws SQLException, ClassNotFoundException {
         Connection connectionToDataBase = null;
-        Statement statement;
+        Statement statement = null;
         String DateAndTime;
         DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern(this.dateAndTimeFormat);
         LocalDateTime now = LocalDateTime.now();
         DateAndTime = dateAndTimeFormat.format(now);
-        Class.forName(this.driverClass);
         try {
-            connectionToDataBase = DriverManager.getConnection(this.mySqlUrl, this.userName, this.passwordOfDatabase);
+            DatabaseHelper database = new DatabaseHelper();
+            connectionToDataBase = database.connectionToDataBase();
             statement = connectionToDataBase.createStatement();
             DatabaseMetaData checkIfTableExists = connectionToDataBase.getMetaData();
-            ResultSet tables = checkIfTableExists.getTables(null, null, AUDIT, null);
+            ResultSet tables = checkIfTableExists.getTables(null, null, Constants.AUDIT, null);
             if (tables.next()) {
                 statement.execute("INSERT INTO audit VALUES ('" + filepath + "','" + WordSearch + "','" + DateAndTime + "','" + finalResult + "'," + totalNumberOfWords + ",'" + errorMessage + "')");
             } else {
@@ -51,10 +51,8 @@ public class DatabaseHelper {
     Here data gets saved to table
      */
     private void saveDataToTable(String filepath, String searchedWord, String currentDateAndTime, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
-        Connection connectionToDataBase = null;
+        Connection connectionToDataBase = connectionToDataBase();
         try {
-
-            connectionToDataBase = DriverManager.getConnection(this.mySqlUrl, this.userName, this.passwordOfDatabase);
             Statement st = connectionToDataBase.createStatement();
             st.execute(this.createTable);
             st.execute("INSERT INTO audit VALUES ('" + filepath + "','" + searchedWord + "','" + currentDateAndTime + "','" + resultToDatabase + "'," + totalNoOfWords + ",'" + errorMessage + "')");

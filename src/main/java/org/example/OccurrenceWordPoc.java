@@ -41,7 +41,6 @@ public class OccurrenceWordPoc {
             System.out.println("Number of arguments are exceeded");
         }
     }
-
     /*
     In this performRead it is used to call the other class by creating object
      */
