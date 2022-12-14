@@ -22,6 +22,8 @@ public class PerformWordSearch implements Runnable {
     public void run() {
         int matchingResultsCount = 0;
         String inputDataFromFile;
+        String matchingResult;
+        String errorMessage;
         try {
             inputDataFromFile = new String(Files.readAllBytes(Paths.get(inputFilePath)));
             inputDataFromFile = inputDataFromFile.replaceAll("[^a-zA-Z0-9@-]", "  ");
@@ -32,13 +34,17 @@ public class PerformWordSearch implements Runnable {
                 }
             }
             DatabaseHelper dbHelper = new DatabaseHelper();
+
             if (matchingResultsCount > 0) {
-                dbHelper.storingDataToDataBase(inputFilePath, searchWord, "Success", matchingResultsCount, "");
                 System.out.println("The Word : " + searchWord + " is Found! Count : " + matchingResultsCount);
+                matchingResult = "Success";
+                errorMessage = "word found";
             } else {
-                dbHelper.storingDataToDataBase(inputFilePath, searchWord, "Error", matchingResultsCount, "Word not found");
                 System.out.println("The Word : " + searchWord + " is incorrect! Count : " + matchingResultsCount);
+                matchingResult = "Error";
+                errorMessage = "word not found";
             }
+            dbHelper.storingDataToDataBase(inputFilePath, searchWord, matchingResult, matchingResultsCount, errorMessage);
         } catch (Exception e) {
             e.printStackTrace();
         }

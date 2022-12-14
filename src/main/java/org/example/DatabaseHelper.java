@@ -11,6 +11,7 @@ The table contains following columns, path to the file, the word searched, the d
 with error and success messages
  */
 public class DatabaseHelper {
+    public static final String AUDIT = "audit";
     String driverClass = "com.mysql.cj.jdbc.Driver";
     String mySqlUrl = "jdbc:mysql://localhost:3306/Poc1";
     String userName = "root";
@@ -21,18 +22,19 @@ public class DatabaseHelper {
     /*
       Storing data to database
      */
-    public void storingDataToDataBase(String filepath, String WordSearch, String finalResult, int totalNumberOfWords, String errorMessage) throws SQLException {
+    public void storingDataToDataBase(String filepath, String WordSearch, String finalResult, int totalNumberOfWords, String errorMessage) throws SQLException, ClassNotFoundException {
         Connection connectionToDataBase = null;
-        Statement statement = null;
+        Statement statement;
         String DateAndTime;
         DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern(this.dateAndTimeFormat);
         LocalDateTime now = LocalDateTime.now();
         DateAndTime = dateAndTimeFormat.format(now);
+        Class.forName(this.driverClass);
         try {
             connectionToDataBase = DriverManager.getConnection(this.mySqlUrl, this.userName, this.passwordOfDatabase);
             statement = connectionToDataBase.createStatement();
             DatabaseMetaData checkIfTableExists = connectionToDataBase.getMetaData();
-            ResultSet tables = checkIfTableExists.getTables(null, null, "audit", null);
+            ResultSet tables = checkIfTableExists.getTables(null, null, AUDIT, null);
             if (tables.next()) {
                 statement.execute("INSERT INTO audit VALUES ('" + filepath + "','" + WordSearch + "','" + DateAndTime + "','" + finalResult + "'," + totalNumberOfWords + ",'" + errorMessage + "')");
             } else {
@@ -51,7 +53,7 @@ public class DatabaseHelper {
     private void saveDataToTable(String filepath, String searchedWord, String currentDateAndTime, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
         Connection connectionToDataBase = null;
         try {
-            Class.forName(this.driverClass);
+
             connectionToDataBase = DriverManager.getConnection(this.mySqlUrl, this.userName, this.passwordOfDatabase);
             Statement st = connectionToDataBase.createStatement();
             st.execute(this.createTable);
@@ -61,6 +63,18 @@ public class DatabaseHelper {
             System.out.println(e);
         } finally {
             Objects.requireNonNull(connectionToDataBase).close();
+        }
+    }
+
+    private Connection connectionToDataBase() throws SQLException {
+        Connection connectionToDataBase = null;
+        try {
+            Class.forName(this.driverClass);
+            connectionToDataBase = DriverManager.getConnection(this.mySqlUrl, this.userName, this.passwordOfDatabase);
+            return connectionToDataBase;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return connectionToDataBase;
         }
     }
 }

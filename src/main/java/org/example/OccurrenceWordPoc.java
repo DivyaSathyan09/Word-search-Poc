@@ -16,7 +16,7 @@ public class OccurrenceWordPoc {
     once if the input is received it shows processing
     and executes if the file is present or not present
      */
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         if (args.length == 2) {
             String inputFilePath = args[0];
             String searchWord = args[1];
@@ -26,13 +26,12 @@ public class OccurrenceWordPoc {
                 System.out.println("Processing......");
                 if (inputFile.exists()) {
                     System.out.println("File already exists");
+                    performReadWordSearch(inputFilePath, searchWord);
                 } else {
                     DatabaseHelper databasehelper = new DatabaseHelper();
                     databasehelper.storingDataToDataBase(inputFilePath, searchWord, "Error", 0, "File not found");
                     System.out.println("File dont exist");
-                    return;
                 }
-                performReadWordSearch(inputFilePath, searchWord);
             } else {
                 DatabaseHelper databasehelper = new DatabaseHelper();
                 databasehelper.storingDataToDataBase(inputFilePath, searchWord, "Error", 0, "File not in Supported format");
