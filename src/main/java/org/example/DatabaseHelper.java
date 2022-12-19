@@ -11,27 +11,18 @@ The table contains following columns, path to the file, the word searched, the d
 with error and success messages
  */
 public class DatabaseHelper {
-
-    String driverClass = "com.mysql.cj.jdbc.Driver";
-    String mySqlUrl = "jdbc:mysql://localhost:3306/Poc1";
-    String userName = "root";
-    String passwordOfDatabase = "DivyaSathyan022960";
-    String dateAndTimeFormat = "dd/MM/yyyy HH:mm:ss";
-    String createTable = "create table audit (PathOfTheFile varchar(100), WordSearched varchar(50), DateAndTime varchar(50), FinalResult varchar(50), NumberOfWordCount int, ErrorMessage varchar(100))";
-
     /*
       Storing data to database
      */
-    public void storingDataToDataBase(String filepath, String WordSearch, String finalResult, int totalNumberOfWords, String errorMessage) throws SQLException, ClassNotFoundException {
+    public void storingDataToDataBase(String filepath, String WordSearch, String finalResult, int totalNumberOfWords, String errorMessage) throws SQLException {
         Connection connectionToDataBase = null;
-        Statement statement = null;
+        Statement statement;
         String DateAndTime;
-        DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern(this.dateAndTimeFormat);
+        DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern(Constants.dateAndTimeFormat);
         LocalDateTime now = LocalDateTime.now();
         DateAndTime = dateAndTimeFormat.format(now);
         try {
-            DatabaseHelper database = new DatabaseHelper();
-            connectionToDataBase = database.connectionToDataBase();
+            connectionToDataBase = connectionToDataBase();
             statement = connectionToDataBase.createStatement();
             DatabaseMetaData checkIfTableExists = connectionToDataBase.getMetaData();
             ResultSet tables = checkIfTableExists.getTables(null, null, Constants.AUDIT, null);
@@ -54,7 +45,7 @@ public class DatabaseHelper {
         Connection connectionToDataBase = connectionToDataBase();
         try {
             Statement st = connectionToDataBase.createStatement();
-            st.execute(this.createTable);
+            st.execute(Constants.createTable);
             st.execute("INSERT INTO audit VALUES ('" + filepath + "','" + searchedWord + "','" + currentDateAndTime + "','" + resultToDatabase + "'," + totalNoOfWords + ",'" + errorMessage + "')");
 
         } catch (Exception e) {
@@ -67,8 +58,8 @@ public class DatabaseHelper {
     private Connection connectionToDataBase() throws SQLException {
         Connection connectionToDataBase = null;
         try {
-            Class.forName(this.driverClass);
-            connectionToDataBase = DriverManager.getConnection(this.mySqlUrl, this.userName, this.passwordOfDatabase);
+            Class.forName(Constants.driverClass);
+            connectionToDataBase = DriverManager.getConnection(Constants.mySqlUrl, Constants.userName, Constants.passwordOfDatabase);
             return connectionToDataBase;
         } catch (Exception e) {
             e.printStackTrace();

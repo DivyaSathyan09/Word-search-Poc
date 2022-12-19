@@ -16,7 +16,7 @@ public class OccurrenceWordPoc {
     once if the input is received it shows processing
     and executes if the file is present or not present
      */
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    public static void main(String[] args) throws SQLException {
         if (args.length == 2) {
             String inputFilePath = args[0];
             String searchWord = args[1];
@@ -41,6 +41,7 @@ public class OccurrenceWordPoc {
             System.out.println("Number of arguments are exceeded");
         }
     }
+
     /*
     In this performRead it is used to call the other class by creating object
      */
