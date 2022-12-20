@@ -5,8 +5,8 @@ import java.nio.file.Paths;
 import java.util.StringTokenizer;
 
 /*
-This method search the occurence of given word present in file
-count the number of occurance of word and pass the information to main thread
+This method search the Occurrence of given word present in file
+count the number of occurrence of word and pass the information to main thread
 by using implements Runnable and overriding the run()
  */
 public class PerformWordSearch implements Runnable {
@@ -23,28 +23,28 @@ public class PerformWordSearch implements Runnable {
         int matchingResultsCount = 0;
         String inputDataFromFile;
         String matchingResult;
-        String errorMessage;
+        String wordMessage;
         try {
             inputDataFromFile = new String(Files.readAllBytes(Paths.get(inputFilePath)));
             inputDataFromFile = inputDataFromFile.replaceAll("[^a-zA-Z0-9@-]", "  ");
-            StringTokenizer st = new StringTokenizer(inputDataFromFile);
-            while (st.hasMoreTokens()) {
-                if (searchWord.equalsIgnoreCase(st.nextToken())) {
+            StringTokenizer stringTokenizer = new StringTokenizer(inputDataFromFile);
+            while (stringTokenizer.hasMoreTokens()) {
+                if (searchWord.equalsIgnoreCase(stringTokenizer.nextToken())) {
                     matchingResultsCount++;
                 }
             }
-            DatabaseHelper dbHelper = new DatabaseHelper();
+            DatabaseHelper databaseHelper = new DatabaseHelper();
 
             if (matchingResultsCount > 0) {
                 System.out.println("The Word : " + searchWord + " is Found! Count : " + matchingResultsCount);
                 matchingResult = "Success";
-                errorMessage = "word found";
+                wordMessage = "word found";
             } else {
                 System.out.println("The Word : " + searchWord + " is incorrect! Count : " + matchingResultsCount);
                 matchingResult = "Error";
-                errorMessage = "word not found";
+                wordMessage = "word not found";
             }
-            dbHelper.storingDataToDataBase(inputFilePath, searchWord, matchingResult, matchingResultsCount, errorMessage);
+            databaseHelper.storingDataToDataBase(inputFilePath, searchWord, matchingResult, matchingResultsCount, wordMessage);
         } catch (Exception e) {
             e.printStackTrace();
         }

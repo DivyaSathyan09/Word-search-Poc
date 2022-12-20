@@ -54,7 +54,6 @@ public class DatabaseHelper {
             Objects.requireNonNull(connectionToDataBase).close();
         }
     }
-
     private Connection connectionToDataBase() throws SQLException {
         Connection connectionToDataBase = null;
         try {
