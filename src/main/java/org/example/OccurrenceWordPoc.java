@@ -3,8 +3,6 @@ package org.example;
 import java.io.File;
 import java.sql.SQLException;
 
-import static org.example.Constants.ArgumentNumber;
-
 /**
  * In this Poc here the inputs are received from the user, then shows a  message ‘Processing’
  * then the thread will read the file contents, and search for the word given.
@@ -19,7 +17,7 @@ public class OccurrenceWordPoc {
     and executes if the file is present or not present
      */
     public static void main(String[] args) throws SQLException {
-        if (args.length == ArgumentNumber) {
+        if (args.length == Constants.ArgumentNumber) {
             String inputFilePath = args[0];
             String searchWord = args[1];
             System.out.println(inputFilePath);
@@ -27,7 +25,7 @@ public class OccurrenceWordPoc {
                 File inputFile = new File(inputFilePath);
                 System.out.println("Processing......");
                 if (inputFile.exists()) {
-                    System.out.println("File already exists");
+                    System.out.println("File exists");
                     performReadWordSearch(inputFilePath, searchWord);
                 } else {
                     DatabaseHelper databasehelper = new DatabaseHelper();
@@ -45,7 +43,7 @@ public class OccurrenceWordPoc {
     }
 
     /*
-    In this performRead it is used to call the other class by creating object
+    In this performReadWordSearch it is used to call the other class by creating object
      */
     public static void performReadWordSearch(String inputFilePath, String searchWord) {
         // calling performSearch()

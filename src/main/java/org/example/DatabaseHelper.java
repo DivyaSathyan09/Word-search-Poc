@@ -1,6 +1,7 @@
 package org.example;
 
 import java.sql.*;
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -18,7 +19,7 @@ public class DatabaseHelper {
         Connection connectionToDataBase = null;
         Statement statement;
         String DateAndTime;
-        DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern(Constants.dateAndTimeFormat);
+        DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern(Constants.DateAndTimeFormat);
         LocalDateTime now = LocalDateTime.now();
         DateAndTime = dateAndTimeFormat.format(now);
         try {
@@ -27,7 +28,8 @@ public class DatabaseHelper {
             DatabaseMetaData checkIfTableExists = connectionToDataBase.getMetaData();
             ResultSet tables = checkIfTableExists.getTables(null, null, Constants.AUDIT, null);
             if (tables.next()) {
-                statement.execute("INSERT INTO audit VALUES ('" + filepath + "','" + WordSearch + "','" + DateAndTime + "','" + finalResult + "'," + totalNumberOfWords + ",'" + errorMessage + "')");
+                String query = MessageFormat.format("INSERT INTO audit VALUES ({0},{1},{2},{3},{4},{5})", "'" + filepath + "'", "'" + WordSearch + "'", "'" + DateAndTime + "'", "'" + finalResult + "'", "'" + totalNumberOfWords + "'", "'" + errorMessage + "'");
+                statement.execute(query);
             } else {
                 this.saveDataToTable(filepath, WordSearch, DateAndTime, finalResult, totalNumberOfWords, errorMessage);
             }
@@ -44,21 +46,22 @@ public class DatabaseHelper {
     private void saveDataToTable(String filepath, String searchedWord, String currentDateAndTime, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
         Connection connectionToDataBase = connectionToDataBase();
         try {
-            Statement st = connectionToDataBase.createStatement();
-            st.execute(Constants.createTable);
-            st.execute("INSERT INTO audit VALUES ('" + filepath + "','" + searchedWord + "','" + currentDateAndTime + "','" + resultToDatabase + "'," + totalNoOfWords + ",'" + errorMessage + "')");
-
+            Statement statement = connectionToDataBase.createStatement();
+            statement.execute(Constants.CreateTable);
+            String query = MessageFormat.format("INSERT INTO audit VALUES ({0},{1},{2},{3},{4},{5})", "'" + filepath + "'", "'" + searchedWord + "'", "'" + currentDateAndTime + "'", "'" + resultToDatabase + "'", "'" + resultToDatabase + "'", "'" + errorMessage + "'");
+            statement.execute(query);
         } catch (Exception e) {
             System.out.println(e);
         } finally {
             Objects.requireNonNull(connectionToDataBase).close();
         }
     }
+
     private Connection connectionToDataBase() throws SQLException {
         Connection connectionToDataBase = null;
         try {
-            Class.forName(Constants.driverClass);
-            connectionToDataBase = DriverManager.getConnection(Constants.mySqlUrl, Constants.userName, Constants.passwordOfDatabase);
+            Class.forName(Constants.DriverClass);
+            connectionToDataBase = DriverManager.getConnection(Constants.MySqlUrl, Constants.UserName, Constants.PasswordOfDatabase);
             return connectionToDataBase;
         } catch (Exception e) {
             e.printStackTrace();

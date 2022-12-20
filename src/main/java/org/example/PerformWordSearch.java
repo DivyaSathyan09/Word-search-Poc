@@ -26,7 +26,7 @@ public class PerformWordSearch implements Runnable {
         String wordMessage;
         try {
             inputDataFromFile = new String(Files.readAllBytes(Paths.get(inputFilePath)));
-            inputDataFromFile = inputDataFromFile.replaceAll("[^a-zA-Z0-9@-]", "  ");
+            inputDataFromFile = inputDataFromFile.replaceAll(Constants.Regexpattern,Constants.Replacement);
             StringTokenizer stringTokenizer = new StringTokenizer(inputDataFromFile);
             while (stringTokenizer.hasMoreTokens()) {
                 if (searchWord.equalsIgnoreCase(stringTokenizer.nextToken())) {
