@@ -17,7 +17,6 @@ public class PerformWordSearch implements Runnable {
         this.inputFilePath = inputFilePath;
         this.searchWord = searchWord;
     }
-
     @Override
     public void run() {
         int matchingResultsCount = 0;

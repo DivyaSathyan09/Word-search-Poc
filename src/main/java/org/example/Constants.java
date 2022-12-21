@@ -12,4 +12,7 @@ public class Constants {
     public static final int ArgumentNumber = 2;
     public static final String Regexpattern = "[^a-zA-Z0-9@-]";
     public static final String Replacement =" ";
+
+    public static final String txtExtension = ".txt";
+    public static final String jsonExtension= ".json";
 }

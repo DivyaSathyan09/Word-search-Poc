@@ -21,7 +21,7 @@ public class OccurrenceWordPoc {
             String inputFilePath = args[0];
             String searchWord = args[1];
             System.out.println(inputFilePath);
-            if (inputFilePath.endsWith(".txt") || inputFilePath.endsWith(".json")) {
+            if (inputFilePath.endsWith(Constants.txtExtension) || inputFilePath.endsWith(Constants.jsonExtension)) {
                 File inputFile = new File(inputFilePath);
                 System.out.println("Processing......");
                 if (inputFile.exists()) {

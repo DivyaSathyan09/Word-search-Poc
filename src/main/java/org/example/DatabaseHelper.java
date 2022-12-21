@@ -48,7 +48,7 @@ public class DatabaseHelper {
         try {
             Statement statement = connectionToDataBase.createStatement();
             statement.execute(Constants.CreateTable);
-            String query = MessageFormat.format("INSERT INTO audit VALUES ({0},{1},{2},{3},{4},{5})", "'" + filepath + "'", "'" + searchedWord + "'", "'" + currentDateAndTime + "'", "'" + resultToDatabase + "'", "'" + resultToDatabase + "'", "'" + errorMessage + "'");
+            String query = MessageFormat.format("INSERT INTO audit VALUES ({0},{1},{2},{3},{4},{5})", "'" + filepath + "'", "'" + searchedWord + "'", "'" + currentDateAndTime + "'", "'" + resultToDatabase + "'", "'" + totalNoOfWords + "'", "'" + errorMessage + "'");
             statement.execute(query);
         } catch (Exception e) {
             System.out.println(e);
