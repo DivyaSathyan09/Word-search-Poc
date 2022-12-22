@@ -19,7 +19,7 @@ public class DatabaseHelper {
         Connection connectionToDataBase = null;
         Statement statement;
         String DateAndTime;
-        DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern(Constants.DateAndTimeFormat);
+        DateTimeFormatter dateAndTimeFormat = DateTimeFormatter.ofPattern(Constants.DATE_AND_TIME_FORMAT);
         LocalDateTime now = LocalDateTime.now();
         DateAndTime = dateAndTimeFormat.format(now);
         try {
@@ -47,7 +47,7 @@ public class DatabaseHelper {
         Connection connectionToDataBase = connectionToDataBase();
         try {
             Statement statement = connectionToDataBase.createStatement();
-            statement.execute(Constants.CreateTable);
+            statement.execute(Constants.CREATE_TABLE);
             String query = MessageFormat.format("INSERT INTO audit VALUES ({0},{1},{2},{3},{4},{5})", "'" + filepath + "'", "'" + searchedWord + "'", "'" + currentDateAndTime + "'", "'" + resultToDatabase + "'", "'" + totalNoOfWords + "'", "'" + errorMessage + "'");
             statement.execute(query);
         } catch (Exception e) {
@@ -60,8 +60,8 @@ public class DatabaseHelper {
     private Connection connectionToDataBase() throws SQLException {
         Connection connectionToDataBase = null;
         try {
-            Class.forName(Constants.DriverClass);
-            connectionToDataBase = DriverManager.getConnection(Constants.MySqlUrl, Constants.UserName, Constants.PasswordOfDatabase);
+            Class.forName(Constants.DRIVER_CLASS);
+            connectionToDataBase = DriverManager.getConnection(Constants.MY_SQL_URL, Constants.USER_NAME, Constants.PASSWORD_OF_DATABASE);
             return connectionToDataBase;
         } catch (Exception e) {
             e.printStackTrace();
