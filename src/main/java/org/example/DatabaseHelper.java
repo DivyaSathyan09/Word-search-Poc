@@ -15,7 +15,7 @@ public class DatabaseHelper {
     /*
       Storing data to database
      */
-    public void storingDataToDataBase(String filepath, String WordSearch, String finalResult, int totalNumberOfWords, String errorMessage) throws SQLException {
+    public void insertDataToDataBase(String filepath, String WordSearch, String finalResult, int totalNumberOfWords, String errorMessage) throws SQLException {
         Connection connectionToDataBase = null;
         Statement statement;
         String DateAndTime;
@@ -23,7 +23,7 @@ public class DatabaseHelper {
         LocalDateTime now = LocalDateTime.now();
         DateAndTime = dateAndTimeFormat.format(now);
         try {
-            connectionToDataBase = connectionToDataBase();
+            connectionToDataBase = connectToDataBase();
             statement = connectionToDataBase.createStatement();
             DatabaseMetaData checkIfTableExists = connectionToDataBase.getMetaData();
             ResultSet tables = checkIfTableExists.getTables(null, null, Constants.AUDIT, null);
@@ -31,7 +31,7 @@ public class DatabaseHelper {
                 String query = MessageFormat.format("INSERT INTO audit VALUES ({0},{1},{2},{3},{4},{5})", "'" + filepath + "'", "'" + WordSearch + "'", "'" + DateAndTime + "'", "'" + finalResult + "'", "'" + totalNumberOfWords + "'", "'" + errorMessage + "'");
                 statement.execute(query);
             } else {
-                this.saveDataToTable(filepath, WordSearch, DateAndTime, finalResult, totalNumberOfWords, errorMessage);
+                this.createTableAndInsertDataToDatabase(filepath, WordSearch, DateAndTime, finalResult, totalNumberOfWords, errorMessage);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -43,8 +43,8 @@ public class DatabaseHelper {
     /*
     Here data gets saved to table
      */
-    private void saveDataToTable(String filepath, String searchedWord, String currentDateAndTime, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
-        Connection connectionToDataBase = connectionToDataBase();
+    private void createTableAndInsertDataToDatabase(String filepath, String searchedWord, String currentDateAndTime, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
+        Connection connectionToDataBase = connectToDataBase();
         try {
             Statement statement = connectionToDataBase.createStatement();
             statement.execute(Constants.CREATE_TABLE);
@@ -57,7 +57,7 @@ public class DatabaseHelper {
         }
     }
 
-    private Connection connectionToDataBase() throws SQLException {
+    private Connection connectToDataBase() throws SQLException {
         Connection connectionToDataBase = null;
         try {
             Class.forName(Constants.DRIVER_CLASS);

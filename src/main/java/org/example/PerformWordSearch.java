@@ -3,6 +3,7 @@ package org.example;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
 
@@ -21,7 +22,7 @@ public class PerformWordSearch implements Callable<Integer> {
         this.searchWord = searchWord;
     }
 
-    public static void displayResult(String inputFilePath, String searchWord, int matchingResultCount) {
+    public static void displayResult(String inputFilePath, String searchWord, int matchingResultCount) throws SQLException {
         try {
             String matchingResult;
             String wordMessage;
@@ -35,7 +36,7 @@ public class PerformWordSearch implements Callable<Integer> {
                 matchingResult = "Error";
                 wordMessage = "word not found";
             }
-            databaseHelper.storingDataToDataBase(inputFilePath, searchWord, matchingResult, matchingResultCount, wordMessage);
+            databaseHelper.insertDataToDataBase(inputFilePath, searchWord, matchingResult, matchingResultCount, wordMessage);
         } catch (Exception e) {
             e.printStackTrace();
         }

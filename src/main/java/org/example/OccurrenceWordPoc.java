@@ -38,12 +38,12 @@ public class OccurrenceWordPoc {
                     threadPool.shutdown();
                 } else {
                     DatabaseHelper databasehelper = new DatabaseHelper();
-                    databasehelper.storingDataToDataBase(inputFilePath, searchWord, "Error", 0, "File not found");
+                    databasehelper.insertDataToDataBase(inputFilePath, searchWord, "Error", 0, "File not found");
                     System.out.println("File dont exist");
                 }
             } else {
                 DatabaseHelper databasehelper = new DatabaseHelper();
-                databasehelper.storingDataToDataBase(inputFilePath, searchWord, "Error", 0, "File not in Supported format");
+                databasehelper.insertDataToDataBase(inputFilePath, searchWord, "Error", 0, "File not in Supported format");
                 System.out.println("File is not in Supported format");
             }
         } else {
