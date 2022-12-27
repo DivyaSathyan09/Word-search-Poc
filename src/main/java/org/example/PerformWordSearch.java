@@ -3,42 +3,64 @@ package org.example;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.StringTokenizer;
+import java.util.concurrent.Callable;
 
 /*
-In this performWord it is used to search the given word present in file
-count the number of ccurance of word and pass the information to main thread
-by using implements Runnable and overriding the run()
+This method search the Occurrence of given word present in file
+count the number of occurrence of word and pass the information to main thread
+by using implements callable
  */
-public class PerformWordSearch implements Runnable {
+public class PerformWordSearch implements Callable<Integer> {
     private final String inputFilePath;
     private final String searchWord;
+    int matchingResultCount = 0;
 
     public PerformWordSearch(String inputFilePath, String searchWord) {
         this.inputFilePath = inputFilePath;
         this.searchWord = searchWord;
     }
 
-    @Override
-    public void run() {
-        int matchingResultsCount = 0;
+    public static void displayResult(String inputFilePath, String searchWord, int matchingResultCount) throws SQLException {
+        try {
+            String matchingResult;
+            String wordMessage;
+            DatabaseHelper databaseHelper = new DatabaseHelper();
+            if (matchingResultCount > 0) {
+                System.out.println("The Word : " + searchWord + " is Found! Count : " + matchingResultCount);
+                matchingResult = "Success";
+                wordMessage = "word found";
+            } else {
+                System.out.println("The Word : " + searchWord + " is incorrect! Count : " + matchingResultCount);
+                matchingResult = "Error";
+                wordMessage = "word not found";
+            }
+            databaseHelper.insertDataToDataBase(inputFilePath, searchWord, matchingResult, matchingResultCount, wordMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void searchWord() {
         String inputDataFromFile;
         try {
             inputDataFromFile = new String(Files.readAllBytes(Paths.get(inputFilePath)));
-            inputDataFromFile = inputDataFromFile.replaceAll("[^a-zA-Z0-9@-]", "  ");
-            StringTokenizer st = new StringTokenizer(inputDataFromFile);
-            while (st.hasMoreTokens()) {
-                if (searchWord.equalsIgnoreCase(st.nextToken())) {
-                    matchingResultsCount++;
+            inputDataFromFile = inputDataFromFile.replaceAll(Constants.REGEXPATTERN, Constants.REPLACEMENT);
+            StringTokenizer stringTokenizer = new StringTokenizer(inputDataFromFile);
+            while (stringTokenizer.hasMoreTokens()) {
+                if (searchWord.equalsIgnoreCase(stringTokenizer.nextToken())) {
+                    matchingResultCount++;
                 }
             }
-            if (matchingResultsCount > 0) {
-                System.out.println("The Word : " + searchWord + " is Found! Count : " + matchingResultsCount);
-            } else {
-                System.out.println("The Word : " + searchWord + " is incorrect! Count : " + matchingResultsCount);
-            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        searchWord();
+        return matchingResultCount;
     }
 }
